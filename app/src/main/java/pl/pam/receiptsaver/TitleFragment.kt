@@ -13,10 +13,12 @@ class TitleFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val binding: FragmentTitleBinding = DataBindingUtil.inflate(
-            inflater, R.layout.fragment_title, container, false)
+        val binding = DataBindingUtil.inflate<FragmentTitleBinding>(
+            inflater, R.layout.fragment_title, container, false
+        )
         binding.addReceiptButton.setOnClickListener { v: View ->
-            v.findNavController().navigate(TitleFragmentDirections.actionTitleFragmentToSaveReceiptFragment())
+            v.findNavController()
+                .navigate(TitleFragmentDirections.actionTitleFragmentToSaveReceiptFragment())
         }
         setHasOptionsMenu(true)
         return binding.root

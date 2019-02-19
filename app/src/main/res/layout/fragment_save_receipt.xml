@@ -3,64 +3,98 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.example.android.navigation.SaveReceiptFragment">
 
-<!--    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/titleConstraint"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">-->
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <EditText
-                android:id="@+id/enter_purchase_date"
-                style="@style/NameStyle"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="20dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                android:hint="@string/enter_purchase_date"
-                android:inputType="datetime"
-                android:textAlignment="center" />
+                android:orientation="horizontal"
+                android:padding="10dp">
 
-            <EditText
+                <Button
+                    android:id="@+id/date_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:padding="15dp"
+                    android:text="Wybierz datę zakupu" />
+
+                <TextView
+                    android:id="@+id/date_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/enter_price"
-                style="@style/NameStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="20dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                android:autofillHints=""
-                android:hint="@string/enter_price"
-                android:inputType="numberDecimal"
-                android:textAlignment="center" />
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:hint="Wprowadź cenę"
+                app:startIconContentDescription="PLN"
+                app:startIconDrawable="@drawable/outline_paid_24">
 
-            <EditText
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="numberDecimal" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/enter_receipt_name"
-                style="@style/NameStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="20dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                android:hint="@string/enter_receipt_name"
-                android:inputType="textPersonName"
-                android:textAlignment="center" />
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:hint="Wprowadź nazwę paragonu">
 
-            <EditText
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/enter_shop_name"
-                style="@style/NameStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="20dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                android:hint="@string/enter_shop_name"
-                android:inputType="textPersonName"
-                android:textAlignment="center" />
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:hint="@string/enter_shop_name">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!--            <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/enter_shop_name"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="20dp"
+                            android:layout_marginStart="64dp"
+                            android:layout_marginEnd="64dp"
+                            android:hint="@string/enter_shop_name"
+                            android:inputType="textPersonName"
+                            android:textAlignment="center" />-->
 
             <Spinner
                 android:id="@+id/spCategories"
@@ -70,32 +104,27 @@
                 android:entries="@array/categories" />
 
             <ImageView
-                android:id="@+id/imageView2"
+                android:id="@+id/receipt_image"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="170dp"
                 app:srcCompat="@android:drawable/ic_menu_mapmode"
-                tools:srcCompat="@tools:sample/avatars" />
+                tools:srcCompat="@android:drawable/ic_menu_camera" />
 
             <Button
                 android:id="@+id/save_receipt_button"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center|center_vertical"
+                android:layout_margin="20dp"
                 android:layout_marginStart="32dp"
                 android:layout_marginEnd="32dp"
-                android:layout_margin="20dp"
+                android:paddingVertical="15dp"
                 android:paddingStart="@dimen/button_padding"
                 android:paddingEnd="@dimen/button_padding"
                 android:text="@string/save_receipt"
                 android:textColor="@android:color/white"
                 android:textSize="12sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageView" />
-
+                android:textStyle="bold" />
         </LinearLayout>
-
-    <!--</androidx.constraintlayout.widget.ConstraintLayout>-->
+    </ScrollView>
 </layout>
