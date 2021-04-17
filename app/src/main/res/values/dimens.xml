@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="horizontal_margin">8dp</dimen>
+    <dimen name="button_padding">64dp</dimen>
+    <dimen name="image_header_height">132dp</dimen>
+</resources>
