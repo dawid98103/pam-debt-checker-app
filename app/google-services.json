@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "591379978286",
+    "project_id": "pam-receipt-app",
+    "storage_bucket": "pam-receipt-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:591379978286:android:31923457bf095d1d04a7bf",
+        "android_client_info": {
+          "package_name": "pl.pam.receiptsaver"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "591379978286-ie1vt92oicibotq8lgf8reji2f8mcnoh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC_jBZAgDHAs12HqP0OyrDNrIJ8AiF-FSs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "591379978286-ie1vt92oicibotq8lgf8reji2f8mcnoh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
