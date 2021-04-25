@@ -84,18 +84,6 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <!--            <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/enter_shop_name"
-                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="20dp"
-                            android:layout_marginStart="64dp"
-                            android:layout_marginEnd="64dp"
-                            android:hint="@string/enter_shop_name"
-                            android:inputType="textPersonName"
-                            android:textAlignment="center" />-->
-
             <Spinner
                 android:id="@+id/spCategories"
                 android:layout_width="match_parent"

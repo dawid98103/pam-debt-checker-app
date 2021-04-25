@@ -18,10 +18,16 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.github.dhaval2404.imagepicker.ImagePicker
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.fragment_save_receipt.*
 import pl.pam.receiptsaver.databinding.FragmentSaveReceiptBinding
+import pl.pam.receiptsaver.firebasedb.FirebaseStorageManager
+import java.sql.Timestamp
 import java.util.*
+import kotlin.collections.HashMap
 
 class SaveReceiptFragment : Fragment(), DatePickerDialog.OnDateSetListener,
     TimePickerDialog.OnTimeSetListener {
@@ -41,7 +47,15 @@ class SaveReceiptFragment : Fragment(), DatePickerDialog.OnDateSetListener,
     private val CAMERA_PERMISSION_CODE = 101
     private val REQUEST_CAMERA_CODE = 102
 
-    private var imgUriToAssign: String = ""
+    private var categoryToAssign: Int = 0
+
+    companion object {
+        var imgUriToAssign: String = ""
+    }
+
+    private val db: FirebaseDatabase =
+        FirebaseDatabase.getInstance("https://pam-receipt-app-default-rtdb.europe-west1.firebasedatabase.app/")
+    private val databaseRef: DatabaseReference = db.reference.child("Receipts");
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -58,7 +72,7 @@ class SaveReceiptFragment : Fragment(), DatePickerDialog.OnDateSetListener,
                 position: Int,
                 id: Long
             ) {
-
+                categoryToAssign = id.toInt()
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -71,6 +85,30 @@ class SaveReceiptFragment : Fragment(), DatePickerDialog.OnDateSetListener,
         }
         binding.receiptImage.setOnClickListener {
             askCameraPermissions()
+        }
+        binding.saveReceiptButton.setOnClickListener {
+            val receiptPrice: String = enter_price.editText?.text.toString()
+            val receiptName: String = enter_receipt_name.editText?.text.toString()
+            val shopName: String = enter_shop_name.editText?.text.toString()
+            val receiptMap: HashMap<String, String> = HashMap()
+
+            val timestamp: Timestamp =
+                Timestamp.valueOf("$savedYear-$savedMonth-$savedDay $savedHour:$savedMinute:00")
+
+            receiptMap["price"] = receiptPrice
+            receiptMap["name"] = receiptName
+            receiptMap["shopName"] = shopName
+            receiptMap["categoryId"] = categoryToAssign.toString()
+            receiptMap["creationDateTime"] = timestamp.time.toString()
+            receiptMap["receiptImage"] = imgUriToAssign
+
+            databaseRef.push().setValue(receiptMap).addOnSuccessListener {
+                Toast.makeText(requireContext(), "Paragon zapisano pomyślnie!", Toast.LENGTH_SHORT)
+                    .show()
+                findNavController().navigate(SaveReceiptFragmentDirections.actionSaveReceiptFragmentToTitleFragment())
+            }.addOnFailureListener {
+                Toast.makeText(requireContext(), "Błąd połączenia!", Toast.LENGTH_SHORT).show()
+            }
         }
 
         return binding.root
@@ -133,7 +171,7 @@ class SaveReceiptFragment : Fragment(), DatePickerDialog.OnDateSetListener,
         savedHour = hourOfDay
         savedMinute = minute
 
-        date_text.text = "$savedDay-$savedMonth-$savedYear  Hour: $savedHour Minute: $savedMinute"
+        date_text.text = "$savedDay-$savedMonth-$savedYear   $savedHour:$savedMinute"
         date_button.text = "Zmień datę zakupu"
     }
 
@@ -142,7 +180,7 @@ class SaveReceiptFragment : Fragment(), DatePickerDialog.OnDateSetListener,
         if (requestCode == REQUEST_CAMERA_CODE) {
             if (resultCode == Activity.RESULT_OK) {
                 receipt_image.setImageURI(data!!.data)
-                imgUriToAssign = FirebaseStorageManager().uploadImage(requireContext(), data.data!!)
+                FirebaseStorageManager().uploadImage(requireContext(), data.data!!)
             }
         }
     }
