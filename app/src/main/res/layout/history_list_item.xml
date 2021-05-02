@@ -33,6 +33,14 @@
             android:layout_below="@id/history_list_item_text_1"
             android:layout_toEndOf="@id/history_list_item_img"
             android:text="Line2" />
+
+        <TextView
+            android:id="@+id/history_list_item_text_3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/history_list_item_text_2"
+            android:layout_toEndOf="@id/history_list_item_img"
+            android:text="Line3" />
     </RelativeLayout>
 
 </androidx.cardview.widget.CardView>

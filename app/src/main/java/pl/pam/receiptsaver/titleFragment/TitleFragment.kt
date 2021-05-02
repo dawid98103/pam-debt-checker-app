@@ -11,12 +11,14 @@ import pl.pam.receiptsaver.databinding.FragmentTitleBinding
 class TitleFragment : Fragment() {
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val binding = DataBindingUtil.inflate<FragmentTitleBinding>(
             inflater, R.layout.fragment_title, container, false
         )
+
         binding.addReceiptButton.setOnClickListener { v: View ->
             v.findNavController()
                 .navigate(TitleFragmentDirections.actionTitleFragmentToSaveReceiptFragment())
