@@ -6,7 +6,7 @@ import android.net.Uri
 import android.util.Log
 import com.google.firebase.storage.FirebaseStorage
 import pl.pam.receiptsaver.R
-import pl.pam.receiptsaver.SaveReceiptFragment
+import pl.pam.receiptsaver.saveReceiptFragment.SaveReceiptFragment
 import java.util.*
 
 class FirebaseStorageManager {

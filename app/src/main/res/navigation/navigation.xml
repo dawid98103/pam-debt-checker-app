@@ -28,7 +28,7 @@
 
     <fragment
         android:id="@+id/saveReceiptFragment"
-        android:name="pl.pam.receiptsaver.SaveReceiptFragment"
+        android:name="pl.pam.receiptsaver.saveReceiptFragment.SaveReceiptFragment"
         android:label="@string/save_receipt"
         tools:layout="@layout/fragment_save_receipt">
         <action

@@ -1,4 +1,4 @@
-package pl.pam.receiptsaver
+package pl.pam.receiptsaver.saveReceiptFragment
 
 import android.Manifest
 import android.app.Activity
@@ -23,6 +23,8 @@ import com.github.dhaval2404.imagepicker.ImagePicker
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.fragment_save_receipt.*
+import pl.pam.receiptsaver.R
+import pl.pam.receiptsaver.SaveReceiptFragmentDirections
 import pl.pam.receiptsaver.databinding.FragmentSaveReceiptBinding
 import pl.pam.receiptsaver.firebasedb.FirebaseStorageManager
 import java.sql.Timestamp
@@ -62,7 +64,8 @@ class SaveReceiptFragment : Fragment(), DatePickerDialog.OnDateSetListener,
         savedInstanceState: Bundle?
     ): View? {
         val binding = DataBindingUtil.inflate<FragmentSaveReceiptBinding>(
-            inflater, R.layout.fragment_save_receipt, container, false
+            inflater,
+            R.layout.fragment_save_receipt, container, false
         )
 
         binding.spCategories.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -100,7 +103,8 @@ class SaveReceiptFragment : Fragment(), DatePickerDialog.OnDateSetListener,
             receiptMap["shopName"] = shopName
             receiptMap["categoryId"] = categoryToAssign.toString()
             receiptMap["creationDateTime"] = timestamp.time.toString()
-            receiptMap["receiptImage"] = imgUriToAssign
+            receiptMap["receiptImage"] =
+                imgUriToAssign
 
             databaseRef.push().setValue(receiptMap).addOnSuccessListener {
                 Toast.makeText(requireContext(), "Paragon zapisano pomyślnie!", Toast.LENGTH_SHORT)
