@@ -45,4 +45,11 @@
         android:label="@string/history_receipt"
         tools:layout="@layout/fragment_receipt_history">
     </fragment>
+
+    <fragment
+        android:id="@+id/aboutFragment"
+        android:name="pl.pam.receiptsaver.aboutFragment.AboutFragment"
+        android:label="O aplikacji"
+        tools:layout="@layout/fragment_about">
+    </fragment>
 </navigation>

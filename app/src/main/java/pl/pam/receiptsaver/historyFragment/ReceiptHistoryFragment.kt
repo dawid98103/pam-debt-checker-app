@@ -1,8 +1,8 @@
 package pl.pam.receiptsaver.historyFragment
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.*
-import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -11,6 +11,7 @@ import com.google.firebase.database.*
 import pl.pam.receiptsaver.R
 import pl.pam.receiptsaver.databinding.FragmentReceiptHistoryBinding
 import pl.pam.receiptsaver.dto.ReceiptInfoItem
+import pl.pam.receiptsaver.receiptDetailsFragment.ReceiptDetailsActivity
 
 class ReceiptHistoryFragment : Fragment(), HistoryListAdapter.OnItemClickListener {
 
@@ -82,9 +83,12 @@ class ReceiptHistoryFragment : Fragment(), HistoryListAdapter.OnItemClickListene
     }
 
     override fun onItemClick(position: Int) {
-        Toast.makeText(requireContext(), "Item $position clicked", Toast.LENGTH_SHORT).show()
         val clickedItem: ReceiptInfoItem = resultList[position]
-        clickedItem.shopName = "Clicked!"
-        adapter.notifyItemChanged(position)
+        startActivity(
+            Intent(requireContext(), ReceiptDetailsActivity::class.java).putExtra(
+                "data",
+                clickedItem
+            )
+        )
     }
 }

@@ -3,7 +3,10 @@ package pl.pam.receiptsaver.historyFragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.Filter
+import android.widget.Filterable
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.history_list_item.view.*
@@ -41,7 +44,7 @@ class HistoryListAdapter internal constructor(
     }
 
     inner class HistoryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView),
-    View.OnClickListener{
+        View.OnClickListener {
         val imageView: ImageView = itemView.history_list_item_img
         val textHeader: TextView = itemView.history_list_item_text_1
         val textDesc: TextView = itemView.history_list_item_text_2
@@ -53,7 +56,7 @@ class HistoryListAdapter internal constructor(
 
         override fun onClick(p0: View?) {
             val position = adapterPosition
-            if(position != RecyclerView.NO_POSITION) {
+            if (position != RecyclerView.NO_POSITION) {
                 listener.onItemClick(position)
             }
         }
@@ -75,16 +78,19 @@ class HistoryListAdapter internal constructor(
     }
 
     override fun getFilter(): Filter {
-        return object: Filter(){
+        return object : Filter() {
             override fun performFiltering(p0: CharSequence?): FilterResults {
                 val filterResults = FilterResults()
-                if(p0 == null || p0.isEmpty()){
+                if (p0 == null || p0.isEmpty()) {
                     filterResults.count = receiptInfoFilterResults.size
                     filterResults.values = receiptInfoFilterResults
-                }else {
+                } else {
                     val searchChr: String = p0.toString().toLowerCase()
                     val receiptInfoItem = ArrayList<ReceiptInfoItem>()
-                    receiptInfoItem.addAll(receiptInfoFilterResults.filter { it.shopName.toLowerCase().contains(searchChr) || it.creationDateTime.contains(searchChr) })
+                    receiptInfoItem.addAll(receiptInfoFilterResults.filter {
+                        it.shopName.toLowerCase().contains(searchChr) ||
+                                getDateTime(it.creationDateTime).contains(searchChr)
+                    })
 
                     filterResults.count = receiptInfoItem.size
                     filterResults.values = receiptInfoItem
