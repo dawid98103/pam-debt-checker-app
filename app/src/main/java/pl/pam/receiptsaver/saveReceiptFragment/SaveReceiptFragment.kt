@@ -24,7 +24,6 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.fragment_save_receipt.*
 import pl.pam.receiptsaver.R
-import pl.pam.receiptsaver.SaveReceiptFragmentDirections
 import pl.pam.receiptsaver.databinding.FragmentSaveReceiptBinding
 import pl.pam.receiptsaver.firebasedb.FirebaseStorageManager
 import java.sql.Timestamp
