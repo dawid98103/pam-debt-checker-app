@@ -24,6 +24,9 @@
             app:exitAnim="@anim/slide_out_left"
             app:launchSingleTop="false"
             app:popUpToInclusive="true"/>
+        <action
+            android:id="@+id/action_titleFragment_to_expenseStatsFragment"
+            app:destination="@id/expenseStatsFragment" />
     </fragment>
 
     <fragment
@@ -44,6 +47,13 @@
         android:name="pl.pam.receiptsaver.historyFragment.ReceiptHistoryFragment"
         android:label="@string/history_receipt"
         tools:layout="@layout/fragment_receipt_history">
+    </fragment>
+
+    <fragment
+        android:id="@+id/expenseStatsFragment"
+        android:name="pl.pam.receiptsaver.expenseStatsFragment.ExpenseStatsFragment"
+        android:label="Statystyki"
+        tools:layout="@layout/fragment_expense_stats">
     </fragment>
 
     <fragment

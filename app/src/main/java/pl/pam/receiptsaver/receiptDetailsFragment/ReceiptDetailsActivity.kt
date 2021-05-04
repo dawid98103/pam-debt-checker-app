@@ -6,6 +6,7 @@ import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_receipt_details.*
 import pl.pam.receiptsaver.R
 import pl.pam.receiptsaver.dto.ReceiptInfoItem
+import pl.pam.receiptsaver.utils.DateFormatter
 import java.time.Instant
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -25,15 +26,6 @@ class ReceiptDetailsActivity : AppCompatActivity() {
         receipt_details_name.text = receiptDetails!!.name
         receipt_details_shop_name.text = receiptDetails!!.shopName
         receipt_details_price.text = "${receiptDetails!!.price} zł"
-        receipt_details_date.text = getDateTime(receiptDetails!!.creationDateTime)
-    }
-
-    private fun getDateTime(s: String): String {
-        val formatter: DateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
-        val dateTime: LocalDateTime = LocalDateTime.ofInstant(
-            Instant.ofEpochMilli(s.toLong()),
-            TimeZone.getDefault().toZoneId()
-        )
-        return dateTime.format(formatter)
+        receipt_details_date.text = DateFormatter.getFormattedDateFromTs(receiptDetails!!.creationDateTime)
     }
 }

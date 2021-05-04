@@ -29,6 +29,11 @@ class TitleFragment : Fragment() {
                 .navigate(TitleFragmentDirections.actionTitleFragmentToHistoryRecycle())
         }
 
+        binding.showExpenseStats.setOnClickListener { v: View ->
+            v.findNavController()
+                .navigate(TitleFragmentDirections.actionTitleFragmentToExpenseStatsFragment())
+        }
+
         setHasOptionsMenu(true)
         return binding.root
     }

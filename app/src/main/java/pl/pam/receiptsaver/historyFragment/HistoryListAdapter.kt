@@ -12,6 +12,7 @@ import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.history_list_item.view.*
 import pl.pam.receiptsaver.R
 import pl.pam.receiptsaver.dto.ReceiptInfoItem
+import pl.pam.receiptsaver.utils.DateFormatter
 import java.time.Instant
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -39,7 +40,7 @@ class HistoryListAdapter internal constructor(
 
         Picasso.get().load(currentItem.receiptImage).into(holder.imageView)
         holder.textHeader.text = currentItem.shopName
-        holder.textDesc.text = getDateTime(currentItem.creationDateTime)
+        holder.textDesc.text = DateFormatter.getFormattedDateFromTs(currentItem.creationDateTime)
         holder.textAmount.text = "${currentItem.price} zł"
     }
 
@@ -68,15 +69,6 @@ class HistoryListAdapter internal constructor(
 
     override fun getItemCount() = receiptInfoResults.size
 
-    private fun getDateTime(s: String): String {
-        val formatter: DateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
-        val dateTime: LocalDateTime = LocalDateTime.ofInstant(
-            Instant.ofEpochMilli(s.toLong()),
-            TimeZone.getDefault().toZoneId()
-        )
-        return dateTime.format(formatter)
-    }
-
     override fun getFilter(): Filter {
         return object : Filter() {
             override fun performFiltering(p0: CharSequence?): FilterResults {
@@ -89,7 +81,7 @@ class HistoryListAdapter internal constructor(
                     val receiptInfoItem = ArrayList<ReceiptInfoItem>()
                     receiptInfoItem.addAll(receiptInfoFilterResults.filter {
                         it.shopName.toLowerCase().contains(searchChr) ||
-                                getDateTime(it.creationDateTime).contains(searchChr)
+                                DateFormatter.getFormattedDateFromTs(it.creationDateTime).contains(searchChr)
                     })
 
                     filterResults.count = receiptInfoItem.size

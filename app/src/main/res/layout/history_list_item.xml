@@ -14,7 +14,7 @@
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_marginEnd="8dp"
-            android:src="@drawable/bill" />
+            android:src="@drawable/receipt" />
 
         <TextView
             android:id="@+id/history_list_item_text_1"
