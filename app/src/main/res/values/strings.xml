@@ -12,7 +12,7 @@
     <string name="history_receipt">Historia zakupów</string>
     <string-array name="categories">
         <item>Jedzenie</item>
-        <item>Paliwo</item>
+        <item>Samochód</item>
         <item>Usługi</item>
     </string-array>
 </resources>

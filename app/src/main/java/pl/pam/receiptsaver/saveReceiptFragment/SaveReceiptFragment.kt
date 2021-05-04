@@ -174,7 +174,7 @@ class SaveReceiptFragment : Fragment(), DatePickerDialog.OnDateSetListener,
         savedHour = hourOfDay
         savedMinute = minute
 
-        date_text.text = "$savedDay-$savedMonth-$savedYear   $savedHour:$savedMinute"
+        date_text.text = "${if(savedDay > 10){savedDay}else{"0$savedDay"}}-${if(savedMonth > 10){savedMonth}else{"0$savedMonth"}}-$savedYear   $savedHour:$savedMinute"
         date_button.text = "Zmień datę zakupu"
     }
 
