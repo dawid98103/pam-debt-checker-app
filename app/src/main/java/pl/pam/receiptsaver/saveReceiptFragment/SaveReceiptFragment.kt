@@ -45,7 +45,9 @@ class SaveReceiptFragment : Fragment(), DatePickerDialog.OnDateSetListener,
     var savedHour = 0
     var savedMinute = 0
 
+    //Unikalny kod dostepu do kamery urządzenia
     private val CAMERA_PERMISSION_CODE = 101
+    //Unikalny kod żądania dostępu do kamery urządzenia
     private val REQUEST_CAMERA_CODE = 102
 
     private var categoryToAssign: Int = 0
@@ -54,14 +56,17 @@ class SaveReceiptFragment : Fragment(), DatePickerDialog.OnDateSetListener,
         var imgUriToAssign: String = ""
     }
 
+    //Pobranie instancji bazy danych
     private val db: FirebaseDatabase =
         FirebaseDatabase.getInstance("https://pam-receipt-app-default-rtdb.europe-west1.firebasedatabase.app/")
+    //Referencja do odpowiedniego dokumentu w bazie danych
     private val databaseRef: DatabaseReference = db.reference.child("Receipts");
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        //Zbindowanie odpowiedniego widoku z katalogu layout
         val binding = DataBindingUtil.inflate<FragmentSaveReceiptBinding>(
             inflater,
             R.layout.fragment_save_receipt, container, false
@@ -78,7 +83,6 @@ class SaveReceiptFragment : Fragment(), DatePickerDialog.OnDateSetListener,
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
-                TODO("Not yet implemented")
             }
         }
         binding.dateButton.setOnClickListener {
@@ -102,8 +106,7 @@ class SaveReceiptFragment : Fragment(), DatePickerDialog.OnDateSetListener,
             receiptMap["shopName"] = shopName
             receiptMap["categoryId"] = categoryToAssign.toString()
             receiptMap["creationDateTime"] = timestamp.time.toString()
-            receiptMap["receiptImage"] =
-                imgUriToAssign
+            receiptMap["receiptImage"] = imgUriToAssign
 
             databaseRef.push().setValue(receiptMap).addOnSuccessListener {
                 Toast.makeText(requireContext(), "Paragon zapisano pomyślnie!", Toast.LENGTH_SHORT)
@@ -117,6 +120,24 @@ class SaveReceiptFragment : Fragment(), DatePickerDialog.OnDateSetListener,
         return binding.root
     }
 
+    /**
+     * Metoda wywołująca się po wybraniu przez użytkownika daty.
+     * @property view widget wykorzystywany do wyboru przez użytkownika daty
+     * @property year wybrany rok
+     * @property month wybrany miesiąc
+     * @property dayOfMonth wybrany dzień miesiąca
+     */
+    override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
+        savedDay = dayOfMonth
+        savedMonth = month + 1
+        savedYear = year
+
+        TimePickerDialog(requireContext(), this, hour, minute, true).show()
+    }
+
+    /**
+     * Uzupełnienie domyślnych danych przy otwarciu interfejsu wyboru daty i godziny
+     */
     private fun getDateTimeCalendar() {
         val cal: Calendar = Calendar.getInstance()
         day = cal.get(Calendar.DAY_OF_MONTH)
@@ -126,6 +147,9 @@ class SaveReceiptFragment : Fragment(), DatePickerDialog.OnDateSetListener,
         minute = cal.get(Calendar.MINUTE)
     }
 
+    /**
+     * Zapytanie użytkownika o uprawnienia do użycia kamery
+     */
     private fun askCameraPermissions() {
         if (ContextCompat.checkSelfPermission(
                 requireContext(),
@@ -142,6 +166,9 @@ class SaveReceiptFragment : Fragment(), DatePickerDialog.OnDateSetListener,
         }
     }
 
+    /**
+     * Otwarcie kamery
+     */
     private fun openCamera() {
         ImagePicker.with(this).crop().cameraOnly().start(REQUEST_CAMERA_CODE)
     }
@@ -160,16 +187,12 @@ class SaveReceiptFragment : Fragment(), DatePickerDialog.OnDateSetListener,
         }
     }
 
-    override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
-        savedDay = dayOfMonth
-        savedMonth = month + 1
-        savedYear = year
-
-        getDateTimeCalendar()
-
-        TimePickerDialog(requireContext(), this, hour, minute, true).show()
-    }
-
+    /**
+     * Metoda wywołująca się po wybraniu przez użytkownika godziny
+     * @property view widget wykorzystywany do wyboru przez użytkownika godziny
+     * @property hourOfDay godzina
+     * @property minute minuta
+     */
     override fun onTimeSet(view: TimePicker?, hourOfDay: Int, minute: Int) {
         savedHour = hourOfDay
         savedMinute = minute
@@ -178,6 +201,9 @@ class SaveReceiptFragment : Fragment(), DatePickerDialog.OnDateSetListener,
         date_button.text = "Zmień datę zakupu"
     }
 
+    /**
+     * Wstawienie wykonanego zdjęcia do ImageView, oraz przesłanie go na serwer Firebase
+     */
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQUEST_CAMERA_CODE) {

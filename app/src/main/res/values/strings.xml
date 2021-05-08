@@ -2,13 +2,13 @@
     <string name="app_name">ReceiptSaver</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="title_label">Zakupy</string>
+    <string name="title_label">ReceiptSaver</string>
     <string name="about">O aplikacji</string>
     <string name="enter_purchase_date">Wprowadź datę zakupu</string>
     <string name="enter_price">Wprowadź cenę</string>
     <string name="enter_receipt_name">Wprowadź nazwę</string>
     <string name="enter_shop_name">Wprowadź nazwę sklepu</string>
-    <string name="save_receipt">Zapisz paragon</string>
+    <string name="save_receipt">Dodaj wydatek</string>
     <string name="history_receipt">Historia zakupów</string>
     <string-array name="categories">
         <item>Jedzenie</item>

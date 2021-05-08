@@ -20,6 +20,7 @@ class ReceiptDetailsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_receipt_details)
 
+        //Deserializacja przekazanych danych
         receiptDetails = intent.getSerializableExtra("data") as ReceiptInfoItem
 
         Picasso.get().load(receiptDetails!!.receiptImage).into(receipt_details_image)

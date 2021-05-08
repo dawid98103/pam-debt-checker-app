@@ -1,5 +1,6 @@
 package pl.pam.receiptsaver.expenseStatsFragment
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -22,11 +23,16 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 class ExpenseStatsFragment : Fragment() {
+    //Instancja bazy danych Firebase
     private val db: FirebaseDatabase =
         FirebaseDatabase.getInstance("https://pam-receipt-app-default-rtdb.europe-west1.firebasedatabase.app/")
+
+    //Referencja do odpowiedniego dokumentu bazy danych
     private val databaseRef: DatabaseReference = db.reference.child("Receipts");
     private var resultList: List<ReceiptInfoItem> = ArrayList()
     private var listToRender: ArrayList<String> = ArrayList()
+
+    //Adapter wykorzystywany przy renderowaniu listy wydatków
     private lateinit var adapter: ArrayAdapter<String>
 
     private var selectedYear = 0;
@@ -64,14 +70,15 @@ class ExpenseStatsFragment : Fragment() {
                 },
                 today.get(Calendar.YEAR),
                 today.get(Calendar.MONTH)
-            )
-            builder.setActivatedMonth(Calendar.JULY)
-                .setMinYear(1990)
-                .setActivatedYear(today.get(Calendar.YEAR))
-                .setMaxYear(2030)
-                .setTitle("Wybierz miesiąc i rok")
-                .build()
-                .show()
+            ).also {
+                it.setActivatedMonth(Calendar.JULY)
+                    .setMinYear(1990)
+                    .setActivatedYear(today.get(Calendar.YEAR))
+                    .setMaxYear(2030)
+                    .setTitle("Wybierz miesiąc i rok")
+                    .build()
+                    .show()
+            }
         }
 
         val listView: ListView = binding.expenseList
@@ -82,6 +89,11 @@ class ExpenseStatsFragment : Fragment() {
         return binding.root
     }
 
+    /**
+     * Odświeża dane wydatków z uwzględnieniem podanego miesiąca oraz roku
+     * @property month miesiąc
+     * @property year rok
+     */
     private fun refreshListData(month: Int, year: Int) {
         listToRender.clear()
 
@@ -103,6 +115,9 @@ class ExpenseStatsFragment : Fragment() {
         adapter.notifyDataSetChanged()
     }
 
+    /**
+     * Pobiera dane wydatków z bazy danych realtime database
+     */
     private fun retrieveDataFromDb(): ArrayList<ReceiptInfoItem> {
         val itemList = ArrayList<ReceiptInfoItem>()
 

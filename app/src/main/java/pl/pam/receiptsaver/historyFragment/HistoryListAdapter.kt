@@ -13,12 +13,12 @@ import kotlinx.android.synthetic.main.history_list_item.view.*
 import pl.pam.receiptsaver.R
 import pl.pam.receiptsaver.dto.ReceiptInfoItem
 import pl.pam.receiptsaver.utils.DateFormatter
-import java.time.Instant
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 import java.util.*
 import kotlin.collections.ArrayList
 
+/**
+ * Adapter wykorzystywany przez RecyclerView przy renderowaniu poszczególnych elementów listy
+ */
 class HistoryListAdapter internal constructor(
     private var receiptInfoResults: ArrayList<ReceiptInfoItem>,
     private var receiptInfoFilterResults: ArrayList<ReceiptInfoItem>,
@@ -35,6 +35,11 @@ class HistoryListAdapter internal constructor(
         return HistoryViewHolder(itemView)
     }
 
+    /**
+     * Metoda wypełniająca element listy danymi
+     * @property holder element listy do wypełnienia odpowiednimi danymi
+     * @property position indeks kolejnej pozycji do wyrenderowania z listy
+     */
     override fun onBindViewHolder(holder: HistoryViewHolder, position: Int) {
         val currentItem = receiptInfoResults[position]
 
@@ -69,19 +74,27 @@ class HistoryListAdapter internal constructor(
 
     override fun getItemCount() = receiptInfoResults.size
 
+    /**
+     * Pobranie filtra
+     */
     override fun getFilter(): Filter {
         return object : Filter() {
+            /**
+             * Metoda dokonująca filtrowania
+             * @property p0 ciąg znaków po którym ma nastąpić filtorwanie
+             */
             override fun performFiltering(p0: CharSequence?): FilterResults {
                 val filterResults = FilterResults()
                 if (p0 == null || p0.isEmpty()) {
                     filterResults.count = receiptInfoFilterResults.size
                     filterResults.values = receiptInfoFilterResults
                 } else {
-                    val searchChr: String = p0.toString().toLowerCase()
+                    val searchChr: String = p0.toString().toLowerCase(Locale.getDefault())
                     val receiptInfoItem = ArrayList<ReceiptInfoItem>()
                     receiptInfoItem.addAll(receiptInfoFilterResults.filter {
-                        it.shopName.toLowerCase().contains(searchChr) ||
-                                DateFormatter.getFormattedDateFromTs(it.creationDateTime).contains(searchChr)
+                        it.shopName.toLowerCase(Locale.getDefault()).contains(searchChr) ||
+                                DateFormatter.getFormattedDateFromTs(it.creationDateTime)
+                                    .contains(searchChr)
                     })
 
                     filterResults.count = receiptInfoItem.size

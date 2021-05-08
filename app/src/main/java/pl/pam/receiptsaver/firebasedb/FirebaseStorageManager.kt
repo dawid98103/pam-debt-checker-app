@@ -10,11 +10,12 @@ import pl.pam.receiptsaver.saveReceiptFragment.SaveReceiptFragment
 import java.util.*
 
 class FirebaseStorageManager {
-    private val TAG = "FirebaseStorageManager"
+    //Pobranie referencji do bazy danych Firebase
     private val mStorageRef = FirebaseStorage.getInstance().reference
     private lateinit var mProgressDialog: ProgressDialog
 
     fun uploadImage(mContext: Context, imageURI: Uri) {
+        //Generowanie losowej nazwy obrazka
         val fileName: String = UUID.randomUUID().toString()
 
         mProgressDialog = ProgressDialog(mContext)
@@ -25,7 +26,6 @@ class FirebaseStorageManager {
         )
         val uploadTask = mStorageRef.child("receipts/${fileName}.png").putFile(imageURI)
         uploadTask.addOnSuccessListener {
-            Log.e(TAG, "Obraz wysłany!")
             val downloadURLTask = mStorageRef.child("receipts/${fileName}.png").downloadUrl
             downloadURLTask.addOnSuccessListener {
                 SaveReceiptFragment.imgUriToAssign = it.toString()
@@ -35,7 +35,6 @@ class FirebaseStorageManager {
             }
             mProgressDialog.dismiss()
         }.addOnFailureListener {
-            Log.e(TAG, "Wystąpił błąd!")
             mProgressDialog.dismiss()
         }
     }

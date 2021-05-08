@@ -15,8 +15,10 @@ import pl.pam.receiptsaver.receiptDetailsFragment.ReceiptDetailsActivity
 
 class ReceiptHistoryFragment : Fragment(), HistoryListAdapter.OnItemClickListener {
 
+    //Pobranie instancji bazy danych
     private val db: FirebaseDatabase =
         FirebaseDatabase.getInstance("https://pam-receipt-app-default-rtdb.europe-west1.firebasedatabase.app/")
+    //Referencja do odpowiedniego dokumentu w bazie danych
     private val databaseRef: DatabaseReference = db.reference.child("Receipts");
     private var resultList: List<ReceiptInfoItem> = ArrayList()
 
@@ -46,8 +48,12 @@ class ReceiptHistoryFragment : Fragment(), HistoryListAdapter.OnItemClickListene
         return binding.root
     }
 
+    /**
+     * Pobranie zapisanych wydatków oraz umieszczenie ich w liście
+     * @return lista zarchiwizowanych wydatków pobranych z bazy Firebase
+     */
     private fun createReceiptsList(): ArrayList<ReceiptInfoItem> {
-        var itemList = ArrayList<ReceiptInfoItem>()
+        val itemList = ArrayList<ReceiptInfoItem>()
 
         databaseRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
@@ -63,6 +69,9 @@ class ReceiptHistoryFragment : Fragment(), HistoryListAdapter.OnItemClickListene
         return itemList
     }
 
+    /**
+     * Definiowanie i towrzenie menu odpowiedzialnego za filtrowanie wydatków
+     */
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.search_menu, menu)
@@ -82,6 +91,11 @@ class ReceiptHistoryFragment : Fragment(), HistoryListAdapter.OnItemClickListene
         })
     }
 
+    /**
+     * Nadpisanie metody zdefiniowanej w interfejsie HistoryListAdapter.OnItemClickListener
+     * metoda rozpoznaje kliknięty element listy, oraz uruchamia aktywność, jednocześnie
+     * przekazując dane dot. wybranej pozycji
+     */
     override fun onItemClick(position: Int) {
         val clickedItem: ReceiptInfoItem = resultList[position]
         startActivity(

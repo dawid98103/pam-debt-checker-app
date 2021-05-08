@@ -16,7 +16,7 @@
             android:layout_marginBottom="200dp"
             android:paddingStart="@dimen/button_padding"
             android:paddingEnd="@dimen/button_padding"
-            android:text="Dodaj paragon"
+            android:text="Dodaj wydatek"
             android:textColor="@android:color/white"
             android:textSize="12sp"
             android:textStyle="bold"

@@ -23,5 +23,4 @@
         <activity android:name=".receiptDetailsFragment.ReceiptDetailsActivity">
         </activity>
     </application>
-
 </manifest>
