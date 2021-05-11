@@ -3,7 +3,9 @@ package pl.pam.receiptsaver.constants
 enum class ExpenseCategory(val categoryName: String, val categoryId: String) {
     FOOD("Jedzenie", "0"),
     CAR("Samochód", "1"),
-    SERVICES("Usługi", "2");
+    SERVICES("Usługi", "2"),
+    ELECTRONIC("Elektronika", "3"),
+    OTHER("Inne", "4");
 
     companion object {
         /**

@@ -14,5 +14,7 @@
         <item>Jedzenie</item>
         <item>Samochód</item>
         <item>Usługi</item>
+        <item>Elektronika</item>
+        <item>Inne</item>
     </string-array>
 </resources>

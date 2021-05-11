@@ -121,7 +121,8 @@ class SaveReceiptFragment : Fragment(), DatePickerDialog.OnDateSetListener,
     }
 
     /**
-     * Metoda wywołująca się po wybraniu przez użytkownika daty.
+     * Metoda wywołująca się po wybraniu przez użytkownika daty. Zapisuje ona wybraną przez użytkownika datę,
+     * po czym uruchamia okno typu "Dialog" z wyborem godziny.
      * @property view widget wykorzystywany do wyboru przez użytkownika daty
      * @property year wybrany rok
      * @property month wybrany miesiąc
@@ -188,7 +189,7 @@ class SaveReceiptFragment : Fragment(), DatePickerDialog.OnDateSetListener,
     }
 
     /**
-     * Metoda wywołująca się po wybraniu przez użytkownika godziny
+     * Metoda wywołująca się po wybraniu przez użytkownika godziny. Zapisuje ona wybraną przez użytkownika godzinę
      * @property view widget wykorzystywany do wyboru przez użytkownika godziny
      * @property hourOfDay godzina
      * @property minute minuta

@@ -44,7 +44,7 @@ class HistoryListAdapter internal constructor(
         val currentItem = receiptInfoResults[position]
 
         Picasso.get().load(currentItem.receiptImage).into(holder.imageView)
-        holder.textHeader.text = currentItem.shopName
+        holder.textHeader.text = currentItem.name
         holder.textDesc.text = DateFormatter.getFormattedDateFromTs(currentItem.creationDateTime)
         holder.textAmount.text = "${currentItem.price} zł"
     }
@@ -92,7 +92,7 @@ class HistoryListAdapter internal constructor(
                     val searchChr: String = p0.toString().toLowerCase(Locale.getDefault())
                     val receiptInfoItem = ArrayList<ReceiptInfoItem>()
                     receiptInfoItem.addAll(receiptInfoFilterResults.filter {
-                        it.shopName.toLowerCase(Locale.getDefault()).contains(searchChr) ||
+                        it.name.toLowerCase(Locale.getDefault()).contains(searchChr) ||
                                 DateFormatter.getFormattedDateFromTs(it.creationDateTime)
                                     .contains(searchChr)
                     })
